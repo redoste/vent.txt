@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="robots" content="noindex">
+		<title>vent.txt</title>
+		<link rel="stylesheet" type="text/css" href="index.css">
+	</head>
+	<body>
+		<p>
+			This is some sort of journal I will shout into when required.
+			Don't expect anything consistent or meaningful, I will mostly complain about the sad state of my {brain,body,mind} and <em>try</em> to explain why.
+		</p>
+		<p>Generated using <a href="https://github.com/redoste/vent.txt">vent.txt</a>.</p>
+		{{#each_reverse this}}
+		<div class="entry" id="{{@index}}">
+			<div class="id">{{@index}}</div>
+			<div class="date">{{date}}</div>
+			<div class="message">
+				{{#if_reply reply}}<a href="#{{reply}}">&gt;&gt;{{reply}}</a>{{/if_reply}}{{message}}
+			</div>
+		</div>
+		{{/each_reverse}}
+	</body>
+</html>

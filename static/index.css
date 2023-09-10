@@ -1,0 +1,37 @@
+body {
+	font-family: monospace;
+	color: #ffffff;
+	background-color: #000000;
+	max-width: 30cm;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 8px;
+	padding-right: 8px;
+}
+
+.entry {
+	border: #505050 solid 1px;
+	margin: 5px;
+	padding: 5px;
+	word-wrap: break-word;
+}
+
+.id {
+	display: inline;
+	font-weight: bold;
+}
+
+.date {
+	display: inline;
+	color: #767676;
+}
+
+.message {
+	padding-left: 2em;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+a {
+	color: #aaaaff;
+}

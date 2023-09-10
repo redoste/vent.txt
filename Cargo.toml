@@ -1,0 +1,18 @@
+[package]
+name = "venttxt"
+license = "Unlicense"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "vent"
+path = "src/main.rs"
+
+[profile.release]
+strip = true
+
+[dependencies]
+chrono = "0.4"
+handlebars = "4.3"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
