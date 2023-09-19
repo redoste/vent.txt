@@ -65,15 +65,16 @@ impl Entry {
         let (date, message) = raw_entry.split_at(date_end);
         let message = &message[1..]; // We drop the separating comma
 
-        let (reply, message) = if message.len() > 2 && &message[..2] == ">>" {
-            let reply_end = message.find(' ').unwrap_or(message.len());
-            let reply_text = &message[2..reply_end];
-            let reply = reply_text.parse().ok();
-            let message_start = if reply.is_some() { reply_end } else { 0 };
-            (reply, &message[message_start..])
-        } else {
-            (None, message)
-        };
+        let (reply, message) =
+            if message.len() > 2 && message.is_char_boundary(2) && &message[..2] == ">>" {
+                let reply_end = message.find(' ').unwrap_or(message.len());
+                let reply_text = &message[2..reply_end];
+                let reply = reply_text.parse().ok();
+                let message_start = if reply.is_some() { reply_end } else { 0 };
+                (reply, &message[message_start..])
+            } else {
+                (None, message)
+            };
 
         Ok(Entry {
             date: date.to_owned(),
