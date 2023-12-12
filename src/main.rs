@@ -111,7 +111,10 @@ fn edit(message_id: usize, message: &str) -> Result<(), IoError> {
         }
     }
 
-    let mut file = File::options().write(true).open(get_csv_path())?;
+    let mut file = File::options()
+        .truncate(true)
+        .write(true)
+        .open(get_csv_path())?;
     for entry in entries.iter() {
         writeln!(file, "{entry}")?;
     }
