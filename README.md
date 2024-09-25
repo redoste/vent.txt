@@ -1,6 +1,6 @@
 # vent.txt
 
-**vent.txt** is a simple command line tool to add short, single-line messages to a database and render them as an HTML document. You can see this as some kind of single-user microblogging service.
+**vent.txt** is a simple command line tool to add short messages to a database and render them as an HTML document. You can see this as some kind of single-user microblogging service.
 
 While it can be adapted for other uses, it was designed to be used to implement *SVoH ("Shouting into the Void over HTTP")* and as a mental health journal.
 

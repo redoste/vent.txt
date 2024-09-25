@@ -17,9 +17,7 @@
 		<div class="entry" id="{{@index}}">
 			<div class="id">{{@index}}</div>
 			<div class="date">{{date}}</div>
-			<div class="message">
-				{{#if_reply reply}}<a href="#{{reply}}">&gt;&gt;{{reply}}</a>{{/if_reply}}{{message}}
-			</div>
+			<div class="message">{{#if_reply reply}}<a href="#{{reply}}">&gt;&gt;{{reply}}</a>{{/if_reply}}{{message}}</div>
 		</div>
 		{{/each_reverse}}
 	</body>

@@ -30,6 +30,7 @@ body {
 	padding-left: 2em;
 	padding-top: 5px;
 	padding-bottom: 5px;
+	white-space: pre-line;
 }
 
 a {

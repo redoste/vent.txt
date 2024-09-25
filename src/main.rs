@@ -18,17 +18,57 @@ fn get_template_path() -> String {
     env::var("VENT_TXT_HBS").unwrap_or_else(|_| String::from("template/vent.hbs"))
 }
 
+fn escape(message: &str) -> String {
+    let mut out = String::with_capacity(message.len());
+    for c in message.chars() {
+        match c {
+            '\\' => out.push_str("\\\\"),
+            '\r' => out.push_str("\\r"),
+            '\n' => out.push_str("\\n"),
+            x => out.push(x),
+        }
+    }
+
+    out
+}
+
+fn unescape(message: &str) -> String {
+    let mut in_escape = false;
+    let mut out = String::with_capacity(message.len());
+    for c in message.chars() {
+        if !in_escape && c == '\\' {
+            in_escape = true;
+        } else if in_escape {
+            match c {
+                'r' => out.push('\r'),
+                'n' => out.push('\n'),
+                '\\' => out.push('\\'),
+                x => {
+                    out.push('\\');
+                    out.push(x);
+                }
+            }
+            in_escape = false;
+        } else {
+            out.push(c);
+        }
+    }
+
+    if in_escape {
+        out.push('\\');
+        in_escape = false;
+    }
+
+    assert!(!in_escape);
+    out
+}
+
 fn collect_message_from_args(args: env::Args) -> Result<String, IoError> {
     let message = args.collect::<Vec<String>>().join(" ").trim().to_owned();
     if message.is_empty() {
         Err(IoError::new(ErrorKind::InvalidInput, "Empty message"))
-    } else if message.contains('\n') || message.contains('\r') {
-        Err(IoError::new(
-            ErrorKind::InvalidInput,
-            "Message contains new line",
-        ))
     } else {
-        Ok(message)
+        Ok(escape(&message))
     }
 }
 
@@ -63,7 +103,7 @@ impl Entry {
             .ok_or_else(|| IoError::new(ErrorKind::InvalidData, "No date in entry"))?;
 
         let (date, message) = raw_entry.split_at(date_end);
-        let message = &message[1..]; // We drop the separating comma
+        let message = unescape(&message[1..]); // We drop the separating comma
 
         let (reply, message) =
             if message.len() > 2 && message.is_char_boundary(2) && &message[..2] == ">>" {
@@ -73,7 +113,7 @@ impl Entry {
                 let message_start = if reply.is_some() { reply_end } else { 0 };
                 (reply, &message[message_start..])
             } else {
-                (None, message)
+                (None, message.as_str())
             };
 
         Ok(Entry {
