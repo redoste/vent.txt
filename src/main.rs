@@ -10,12 +10,18 @@ use handlebars as hb;
 use handlebars::{Handlebars, RenderError, Renderable};
 use serde::Serialize;
 
+mod cgi;
+
 fn get_csv_path() -> String {
     env::var("VENT_TXT_CSV").unwrap_or_else(|_| String::from("vent.csv"))
 }
 
 fn get_template_path() -> String {
     env::var("VENT_TXT_HBS").unwrap_or_else(|_| String::from("template/vent.hbs"))
+}
+
+fn get_render_path() -> String {
+    env::var("VENT_TXT_RENDER").unwrap_or_else(|_| String::from("static/vent.html"))
 }
 
 fn escape(message: &str) -> String {
@@ -250,6 +256,7 @@ fn usage(program_name: &str) -> ! {
     eprintln!("       {program_name} edit [message id] [message]");
     eprintln!("       {program_name} rm [message id]");
     eprintln!("       {program_name} render");
+    eprintln!("       {program_name} submitcgi");
     eprintln!();
     eprintln!("Environment: VENT_TXT_CSV    Vent database location");
     eprintln!("                             (default: 'vent.csv')");
@@ -284,6 +291,10 @@ fn main() -> Result<(), IoError> {
                 Err(IoError::new(ErrorKind::Other, "Render error"))
             }
         },
+        "submitcgi" => {
+            cgi::submit_cgi();
+            Ok(())
+        }
         _ => usage(&program_name),
     }
 }

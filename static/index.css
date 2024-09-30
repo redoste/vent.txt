@@ -33,6 +33,12 @@ body {
 	white-space: pre-line;
 }
 
+#form > .message {
+	background-color: #222;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
 a {
 	color: #aaaaff;
 }

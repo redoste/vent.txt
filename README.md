@@ -29,10 +29,12 @@ $ vent render > static/vent.html
 Two environment variables are used to configure the location of important files
 * `VENT_TXT_CSV` : Database (default: `./vent.csv`)
 * `VENT_TXT_HBS` : Template (default: `./template/vent.hbs`)
+* `VENT_TXT_RENDER` : Output file while using `submitcgi` (default: `./static/vent.html`)
 
 ## Customization
 
 The provided files were designed for my use, you will probably want to edit them to fit your situation
 * `static/index.css` : theme
 * `static/index.html` : home page with a content warning
+* `static/submit.cgi` : example script calling `vent submitcgi`
 * `template/vent.hbs` : template with a paragraph explaining the concept

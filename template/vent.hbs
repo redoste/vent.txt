@@ -13,12 +13,32 @@
 			Don't expect anything consistent or meaningful, I will mostly complain about the sad state of my {brain,body,mind} and <em>try</em> to explain why.
 		</p>
 		<p>Generated using <a href="https://github.com/redoste/vent.txt">vent.txt</a>.</p>
+
+		<div class="entry" id="form">
+			<div class="id">+</div>
+			<div class="date">
+				<a href="#" onclick="submit()">submit</a>
+				<a href="#" onclick="reset()">reset</a>
+			</div>
+			<pre class="message" contenteditable="true"></pre>
+			<form method="POST" action="submit.cgi">
+				<input type="hidden" name="message"/>
+				<input type="hidden" name="id"/>
+			</form>
+		</div>
+
 		{{#each_reverse this}}
 		<div class="entry" id="{{@index}}">
 			<div class="id">{{@index}}</div>
-			<div class="date">{{date}}</div>
+			<div class="date">
+				{{date}}
+				<a href="#" onclick="edit({{@index}})">edit</a>
+				<a href="#" onclick="remove({{@index}})">remove</a>
+			</div>
 			<div class="message">{{#if_reply reply}}<a href="#{{reply}}">&gt;&gt;{{reply}}</a>{{/if_reply}}{{message}}</div>
 		</div>
 		{{/each_reverse}}
+
+		<script src="index.js"></script>
 	</body>
 </html>
