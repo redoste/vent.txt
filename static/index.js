@@ -1,16 +1,20 @@
+function get_text_content(element) {
+	let out = "";
+	element.childNodes.forEach((e) => {
+		if (e.tagName == "BR") {
+			out += "\n";
+		} else {
+			out += e.textContent;
+		}
+	});
+	return out;
+}
+
 function submit() {
 	// These shenanigans are required because the browser can make weird things with <br/> and <div>
 	// Using a <pre> as the parent node makes it a *bit* easier
-	let message = "";
-	document.querySelector("#form > .message").childNodes.forEach((e) => {
-		if (e.tagName == "BR") {
-			message += "\n";
-		} else {
-			message += e.textContent;
-		}
-	});
-	message = message.trim();
-	if (message === undefined || message.length <= 0) {
+	let message = get_text_content(document.querySelector("#form > .message")).trim();
+	if (message.length <= 0) {
 		return;
 	}
 
@@ -29,8 +33,10 @@ function reset() {
 
 function edit(id, message) {
 	let original = document.getElementById(id);
-	let original_message = message ? message : original.querySelector(".message").childNodes[0].textContent;
-	document.querySelector("#form > .message").innerText = original_message;
+	if (!message) {
+		message = get_text_content(original.querySelector(".message"));
+	}
+	document.querySelector("#form > .message").innerText = message;
 	document.querySelector("#form > .id").innerText = id;
 }
 
